@@ -7,6 +7,6 @@ public interface AuditService {
 
     void save(Audit audit);
 
-    StatsResponse countBySequence(String sequence);
+    StatsResponse countBySequenceMutant();
 
 }

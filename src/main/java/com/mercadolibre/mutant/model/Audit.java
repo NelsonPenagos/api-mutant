@@ -4,12 +4,16 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
+/**
+ * 
+ * @author nelson.penagos
+ */
 @Document(collection = "audits")
 public class Audit {
 
     @Id
     private String audit_id;
-    private String audit_dna;
+    private String[] audit_dna;
     private String audit_sequence;
 
     public String getAudit_id() {
@@ -20,11 +24,11 @@ public class Audit {
         this.audit_id = audit_id;
     }
 
-    public String getAudit_dna() {
+    public String[] getAudit_dna() {
         return audit_dna;
     }
 
-    public void setAudit_dna(String audit_dna) {
+    public void setAudit_dna(String[] audit_dna) {
         this.audit_dna = audit_dna;
     }
 

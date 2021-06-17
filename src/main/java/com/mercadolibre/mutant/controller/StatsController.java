@@ -16,8 +16,12 @@ public class StatsController {
     @Autowired
     private AuditService auditService;
 
+    /**
+     *
+     * @return
+     */
     @GetMapping("/stats")
     public ResponseEntity<StatsResponse> stats() {
-        return new ResponseEntity<>(auditService.countBySequence("MUTANT"), HttpStatus.OK);
+        return new ResponseEntity<>(auditService.countBySequenceMutant(), HttpStatus.OK);
     }
 }

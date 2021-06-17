@@ -2,8 +2,8 @@ package com.mercadolibre.mutant.services.impl;
 
 import com.mercadolibre.mutant.model.Audit;
 import com.mercadolibre.mutant.payload.StatsResponse;
-import com.mercadolibre.mutant.repository.AuditRepository;
 import com.mercadolibre.mutant.services.AuditService;
+import com.mercadolibre.mutant.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,24 +13,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuditServiceImpl implements AuditService {
 
-    private final AuditRepository auditRepository;
+    private static final String MUTANT = "MUTANT";
+    private static final String HUMAN = "HUMAN";
+    private static final String COLLECTION = "audits";
 
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public AuditServiceImpl(AuditRepository auditRepository) {
-        this.auditRepository = auditRepository;
-    }
-
     public void save(Audit audit) {
-        this.auditRepository.save(audit);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("audit_dna").is(audit.getAudit_dna()));
+        if (mongoTemplate.findOne(query, Audit.class) == null) {
+            mongoTemplate.save(audit);
+        }
     }
 
-    public StatsResponse countBySequence(String sequence) {
-        Query query = new Query();
+    public StatsResponse countBySequenceMutant() {
+        Query qMutant = new Query();
         StatsResponse statsResponse = new StatsResponse();
-        query.addCriteria(Criteria.where("audit_sequence").is(sequence));
-        statsResponse.setCount_human_dna(mongoTemplate.count(query, "audits"));
+        qMutant.addCriteria(Criteria.where("audit_sequence").is(MUTANT));
+        long mutant = mongoTemplate.count(qMutant, COLLECTION);
+        statsResponse.setCount_mutant_dna(mutant);
+        Query qNoMutant = new Query();
+        qNoMutant.addCriteria(Criteria.where("audit_sequence").is(HUMAN));
+        long human = mongoTemplate.count(qNoMutant, COLLECTION);
+        statsResponse.setCount_human_dna(human);
+        statsResponse.setRatio(Util.getRatio(mutant, human));
         return statsResponse;
     }
 
