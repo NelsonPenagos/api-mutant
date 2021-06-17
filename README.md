@@ -14,14 +14,17 @@ Se utiliza **heroku** PaaS para el despliegue de la aplicación, para comodidad 
 - MongoDB
 
 # EndPoints
-```
-POST: https://app-mutant-mercadolibre.herokuapp.com/mutants/api/mutant
-GET: https://app-mutant-mercadolibre.herokuapp.com/mutants/api/stats
-```
+
+    POST: https://app-mutant-mercadolibre.herokuapp.com/mutants/api/mutant
+    GET: https://app-mutant-mercadolibre.herokuapp.com/mutants/api/stats
+
+
+# Swagger
+
+    http://app-mutant-mercadolibre.herokuapp.com/mutants/swagger-ui.html#
 
 # Correr las Imagenes Docker
 
-```
-docker-compose up --build
-```
+    docker-compose up --build
+
 
