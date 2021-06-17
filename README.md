@@ -24,3 +24,4 @@ GET: https://app-mutant-mercadolibre.herokuapp.com/mutants/api/stats
 ```
 docker-compose up --build
 ```
+
