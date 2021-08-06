@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MutantServiceImpl implements MutantService {
 
-
     @Override
     public boolean isMutant(String[] dna) {
 

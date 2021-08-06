@@ -34,11 +34,13 @@ public class AuditServiceImpl implements AuditService {
         qMutant.addCriteria(Criteria.where("audit_sequence").is(MUTANT));
         long mutant = mongoTemplate.count(qMutant, COLLECTION);
         statsResponse.setCount_mutant_dna(mutant);
+
         Query qNoMutant = new Query();
         qNoMutant.addCriteria(Criteria.where("audit_sequence").is(HUMAN));
         long human = mongoTemplate.count(qNoMutant, COLLECTION);
         statsResponse.setCount_human_dna(human);
         statsResponse.setRatio(Util.getRatio(mutant, human));
+
         return statsResponse;
     }
 
